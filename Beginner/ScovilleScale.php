@@ -14,7 +14,7 @@ foreach ($piments as $piment) {
         $name = $extract[0];
         $quantity = $extract[1];
         $pimentScoville = $extract[2];
-        $pimentGram[] = [
+        $pimentGram = [
             'name' => $name,
             'quantity' => (int)$quantity,
             'pimentScoville' => $pimentScoville
@@ -23,7 +23,5 @@ foreach ($piments as $piment) {
 print_r($pimentGram);
 // Calcul
 // pimentScovilleEchelle * pimentGram / totalGram = resultat
-foreach ($pimentGram as $piment) {
-    $result = $piment['pimentScoville'] * $piment['quantity'] / $totalGram;
-}
+$result = $pimentGram['pimentScoville'] * $pimentGram['quantity'] / $totalGram;
 echo ceil($result);
