@@ -55,5 +55,68 @@ for($i = 0; $i < count($foodSequenced); $i++){
       $weightGained += $formulaElement['a'] * $weight + $formulaElement['b'];
    }
 }
-echo $weightGained;
+echo 'Le petit Monstre mignon vas peser '.$weightGained . "\n";
 // réponse attendue : 27
+//***************************************************Partie #2********************************************************//
+//Les petits monstres se mettent en couple, 2 par 2, de la façon suivante :
+//Les petits monstres de type Fruits (F) avec les petits monstres de type Rock (R)
+//Les petits monstres de type Wood (W) avec les petits monstres de type Grass (G)
+//Chaque couple est formé de 2 petits monstres différents : « F+R » ou « W+G »
+//Il va falloir trouver l’indice de rapprochement, qui se calcule de la façon suivante :
+//Couples FR * Couples WG + petits monstres seuls
+$monsters = ['R', 'F', 'G', 'F', 'F', 'G', 'W', 'R', 'W', 'G', 'G', 'R', 'G', 'R', 'W'];
+$monstersType = [
+    'Fruit' => 'F',
+    'Rock' => 'R',
+    'Wood' => 'W',
+    'Grass' => 'G'
+];
+$coupleFR = 0;
+$coupleGW = 0;
+$monsterAlone = 0;
+
+
+//ajout d'un tableau pour ne pas lire deux fois la même lettre
+$supp = array_fill(0, count($monsters), false);
+
+for($i = 0; $i < count($monsters); $i++){
+    if($supp[$i]){
+        continue;
+    }
+
+    if($monsters[$i] == $monstersType['Fruit']){
+        for($j = $i + 1 ; $j < count($monsters); $j++){
+            if($monsters[$j] == $monstersType['Rock'] && !$supp[$j]){
+                $coupleFR++;
+                $supp[$i] = true;
+                $supp[$j] = true;
+                break;
+            }
+        }
+
+    } elseif ($monsters[$i] == $monstersType['Grass']) {
+        for ($j = $i + 1; $j < count($monsters); $j++) {
+            if ($monsters[$j] == $monstersType['Wood'] && !$supp[$j]) {
+                $coupleGW++;
+                $supp[$i] = true;
+                $supp[$j] = true;
+                break;
+            }
+        }
+    }
+}
+for ($i = 0; $i < count($monsters); $i++) {
+    if (!$supp[$i]) {
+        $monsterAlone++;
+    }
+}
+$calcul = ($coupleFR * $coupleGW) + $monsterAlone;
+
+echo $coupleFR . "\n";
+echo $coupleGW . "\n";
+echo $monsterAlone . "\n";
+echo "L'indice est donc " . $calcul;
+
+
+
+
