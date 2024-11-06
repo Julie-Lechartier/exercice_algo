@@ -2,26 +2,19 @@
 //On a une list d'ingrédient avec à chaque fois le nom du piment, la
 //quantité incorporée en gramme et son intensité sur l'échelle de Scoville. Les 3 éléments sont séparés par « : ».
 $piments = [
-    'poivrons:20:0', // 0
-    'piment-komodo-dragon:5:1800000',//1800000
-    'piment-madagascar:10:125000',//125000
-    'piment-bhut-jolokia:10:950000'//950000
+    'piment-poblano:17:1500', 'piment-habanero:7:225000', 'piment-tabasco:19:40000', 'piment-poblano:16:1500', 'piment-carolina-reaper:2:1800000'
 ];
-$totalGram = 700;
+$totalGram = 427;
+$result = 0;
 // on sépare les noms des quantités pour pouvoir faire les calculs
 foreach ($piments as $piment) {
-        $extract = explode(":", $piment);
-        $name = $extract[0];
-        $quantity = $extract[1];
-        $pimentScoville = $extract[2];
-        $pimentGram = [
-            'name' => $name,
-            'quantity' => (int)$quantity,
-            'pimentScoville' => $pimentScoville
-        ];
+        $extract[] = explode(":", $piment);
 }
-print_r($pimentGram);
+print_r($extract);
 // Calcul
 // pimentScovilleEchelle * pimentGram / totalGram = resultat
-$result = $pimentGram['pimentScoville'] * $pimentGram['quantity'] / $totalGram;
+for ($i = 0; $i < count($extract); $i++) {
+    $result += $extract[$i][2] * $extract[$i][1] / $totalGram;
+}
+
 echo ceil($result);
